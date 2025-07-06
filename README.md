@@ -47,11 +47,11 @@ uvicorn local_api:app --host 127.0.0.1 --port 8081
 ```
 4) on the PU run the following command to start StopSec receive operation. 
 ```
-pythone Watermark_RealTime_RX.py -f 3383e6 -r 5e6 -g 30
+python3 Watermark_RealTime_RX.py -f 3383e6 -r 5e6 -g 30
 ```
 5) on each of the SU nodes start the transmission operation. Note that the start time is in 24 hour format. So, make sure to write when you want to start your experiment. Set the same time in all SUs if you want to see the impact of concurrent interference at the PU. Note also that these are default values. You can change the frequency, sampling rate and gains to see how StopSec performs under various signal-to-noise ratio (SNR), and bandwidth and frequencies. If you choose multiple concurrent SU transmissions, check the latency for the node that is turned off last. You can test for various SU and PU configurations and test the performance of StopSec under these configurations. 
 ```
-pythone Watermark_RealTime_TX.py -f 3383e6 -r 5e6 -g 20 --start_time 6:30
+python3 Watermark_RealTime_TX.py -f 3383e6 -r 5e6 -g 20 --start_time 6:30
 ```
 6) Record values evaluate the StopSec system. 
 
