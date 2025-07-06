@@ -6,6 +6,7 @@
 import uhd
 import numpy as np
 import time
+import datetime
 import sys
 import signal
 import argparse
@@ -33,7 +34,7 @@ class Watermark:
     master_clock = 200e6  # Master clock rate
 
     def __init__(self, addr="192.168.40.2", external_clock=False, chan=0,
-                 center_freq=3385e6, gain=30, samp_rate=5e6, pseudonym_bits=26):
+                 center_freq=3385e6, gain=30, samp_rate=5e6, pseudonym_bits=26, start_epoch=None):
         # Initialize SDR and transmission parameters
         self.addr = addr
         self.external_clock = external_clock
@@ -45,6 +46,7 @@ class Watermark:
         self.pseudo = pseudonym_bits
         self.usrp = None
         self.txstreamer = None
+        self.start_epoch = start_epoch
         self.keep_running = True
         self.generator = WatermarkGenerator()
         # self.preamble = np.array([1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1])  # Fixed preamble
@@ -151,6 +153,15 @@ class Watermark:
         print(f"[TX SUMMARY] Sent {total_sent}/{total_requested} samples. Drop events: {drop_events}")
 
     def run(self):
+        if self.start_epoch is not None:
+            print(f"[INFO] Waiting until {self.start_epoch} to start transmission...")
+            while time.time() < self.start_epoch:
+                if not self.keep_running:
+                    print("[INFO] Transmission aborted during wait.")
+                    return
+                time.sleep(0.01)
+            print("[INFO] Starting transmission.")
+        
         # Main loop to transmit pseudonyms and log detection intervals
         elapsed_times = []
         last_detection_time = None
@@ -244,9 +255,19 @@ if __name__ == "__main__":
     parser.add_argument("-f", "--freq", type=float, default=3385e6, help="Center frequency in Hz (default: 3385e6)")
     parser.add_argument("-g", "--gain", type=float, default=30, help="Transmit gain in dB (default: 30)")
     parser.add_argument("-r", "--rate", type=float, default=5e6, help="Sample rate in samples/sec (default: 2e6)")
+    parser.add_argument("--start_time", type=str, help="Start time in HH:MM format (24-hour)")
     args = parser.parse_args()
 
-    tx = Watermark(center_freq=args.freq, gain=args.gain, samp_rate=args.rate)
+    start_epoch = None
+    if args.start_time:
+        now = datetime.datetime.now()
+        hh, mm = map(int, args.start_time.split(":"))
+        start_dt = now.replace(hour=hh, minute=mm, second=0, microsecond=0)
+        if start_dt < now:
+            start_dt += datetime.timedelta(days=1)
+        start_epoch = start_dt.timestamp()
+    
+    tx = Watermark(center_freq=args.freq, gain=args.gain, samp_rate=args.rate, start_epoch=start_epoch)
     signal.signal(signal.SIGINT, handle_interrupt)
     tx.Set_all_params()
     tx.run()
