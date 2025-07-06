@@ -17,6 +17,7 @@ Once you have these parameters selected, click through the rest of the profile a
 - select one of the rooftop nodes to be the PU
 - select at least one of the other rooftop nodes as the SU
 **3) Cloning StopSec to Each Node**
+- run the following command on each node to clone StopSec repositort to your nodes: https://github.com/StopSec/StopSec-System.git
   
 
 
