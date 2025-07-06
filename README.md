@@ -1,8 +1,7 @@
 StopSec is a wireless protocol designed for cooperative spectrum sharing, enabling primary users to reactively stop interference from secondary users.
 
 This profile is intended for doing any experiment using StopSec. 
-
-This profile can allocate X310 radios (+ compute) and Database Server.
+This experiment uses rooftop SDR nodes (USRP X310) and compute nodes from the Emulab cluster. 
 
 Instructions:
 
