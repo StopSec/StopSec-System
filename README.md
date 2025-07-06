@@ -22,7 +22,7 @@ Once you have these parameters selected, click through the rest of the profile a
   ```
   
 **3) Cloning StopSec to Each Node**
-Run the following command on each node to clone StopSec repository to your nodes.
+Run the following command on each node to clone StopSec repository to your nodes. For example: ssh -Y username@pc707.emulab.net
   ```
 git clone https://github.com/StopSec/StopSec-System.git
   ```
