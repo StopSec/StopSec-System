@@ -22,10 +22,11 @@ Once you have these parameters selected, click through the rest of the profile a
   ```
   
 **3) Cloning StopSec to Each Node**
-- run the following command on each node to clone StopSec repositort to your nodes:
+Run the following command on each node to clone StopSec repository to your nodes.
   ```
-   
+   https://github.com/StopSec/StopSec-System.git
   ```
+
 
   
 
