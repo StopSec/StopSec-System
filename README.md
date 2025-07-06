@@ -14,8 +14,8 @@ Once you have these parameters selected, click through the rest of the profile a
 
 **2) Setting up the experiment**
 - once the experiment is ready, the database serever will be indicated on the list view. Other nodes will be indicated as rooftop nodes which the user has to choose. 
-- select one of the rooftop nodes to be the PU
-- select at least one of the other rooftop nodes as the SU
+- select one of the rooftop nodes to be the primary user (PU)
+- select at least one of the other rooftop nodes as the secondary user (SU)
 - run the following command on each of the nodes
   ```
   ssh -Y <username>@<radio_hostname>
@@ -24,10 +24,13 @@ Once you have these parameters selected, click through the rest of the profile a
 **3) Cloning StopSec to Each Node**
 Run the following command on each node to clone StopSec repository to your nodes.
   ```
-   https://github.com/StopSec/StopSec-System.git
+git clone https://github.com/StopSec/StopSec-System.git
   ```
+Run the following command on each node to move to the directory that contains the StopSec files.
 
-
+  ```
+cd StopSec-System
+  ```
   
 
 
