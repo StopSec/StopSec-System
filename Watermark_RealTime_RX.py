@@ -59,7 +59,7 @@ class RealTimePseudonymDetector:
         self.num_chips = num_chips
         self.CP = cp
         self.slide_step = slide_step
-        self.pseudonym_samples = self.pseudonym_length * self.packet_length + self.chip_samples
+        self.pseudonym_samples = self.pseudonym_length * self.packet_length
         self.buffer_length = int(2 * self.pseudonym_samples)
 
         # Power tracking
