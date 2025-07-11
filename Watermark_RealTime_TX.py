@@ -121,7 +121,6 @@ class Watermark:
         meta.end_of_burst = False
 
         max_samps = self.txstreamer.get_max_num_samps() 
-        # print('Max transmit buffer:', max_samps)
         total = samples.size
         idx = 0
 
@@ -170,8 +169,7 @@ class Watermark:
             pseudonym_packet = self.Generate_pseudonym(self.pseudo)
             pseudonym_mess = ''.join(map(str, pseudonym_packet))
             timestamp_generated = time.time()
-            print('TX pseudonym:', pseudonym_packet)
-
+            
             # Write pseudonym to local DB
             write_url = "http://127.0.0.1:8081/write/"
             data = {
@@ -222,11 +220,11 @@ class Watermark:
                                 writer.writerow(["Elapsed Time (s)"])
                                 writer.writerows([[et] for et in elapsed_times])
                             print("[INFO] Logged 100 elapsed times to Elapsed_Time.csv. Stopping transmission.")
-                            # print("Probability pseudonym packet detection:",1000/no_tx)
                             self.keep_running = False
                             return
             except Exception as e:
                 print("[ERROR] Exception checking databases:", e)
+                
             send_start_time = time.time()
             # Encode pseudonym and generate watermarked signal
             pseudonym_codeword = self.encode_hamming_31_26(pseudonym_packet)
